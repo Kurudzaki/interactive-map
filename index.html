@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang='en'>
-
-<html>
+<html lang='ru'>
 
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="scripts/css/styles.css" />
   <title>GTA V Interactive map</title>
 </head>
 
 <body>
-  <div id="map"> </div>
+  <div id="map"></div>
   <script>
     //Initialize Leaflet map
     var map = L.map('map', {
@@ -23,20 +25,22 @@
       //zoomControl: false
     });
     //L.control.zoom({ position:'bottomleft' }).addTo(map);
-        var bounds = [
+    var bounds = [
       [0, 0],
       [8192, 8192]
     ];
     //Initialize each base layer
-    var atlas = L.imageOverlay('images/gtav.png', bounds).addTo(map);
-    var satellite = L.imageOverlay('images/GTAV_SATELLITE_8192x8192.png', bounds)
-    var road = L.imageOverlay('images/GTAV_ROADMAP_8192x8192.png', bounds)
+    var MyLayer = L.tileLayer('tilesmap/{z]/{x}/{y}.png');
+    MyLayer.addTo(map);
+    var atlas = L.imageOverlay('images/gtav.png', bounds);
+    //var satellite = L.imageOverlay('images/GTAV_SATELLITE_8192x8192.png', bounds)
+    //var road = L.imageOverlay('images/GTAV_ROADMAP_8192x8192.png', bounds)
     map.fitBounds(bounds);
     map.setMaxBounds(bounds)
 
     // Load each layer from it's corresponding GeoJSON file
     var ammunation = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/ammunation.png',
@@ -49,12 +53,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Ammu-Nation.json", function(data) {
-      ammunation.addData(data).addTo(map);
+    $.getJSON("geojson/Ammu-Nation.json", function (data) {
+      ammunation.addData(data);
     });
 
     var ammunationwrange = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/ammunationwrange.png',
@@ -67,12 +71,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Ammu-Nation with Range.json", function(data) {
+    $.getJSON("geojson/Ammu-Nation with Range.json", function (data) {
       ammunationwrange.addData(data);
     });
 
     var barbershop = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/barbershop.png',
@@ -85,12 +89,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Barber Shop.json", function(data) {
+    $.getJSON("geojson/Barber Shop.json", function (data) {
       barbershop.addData(data);
     });
 
     var repair = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/repairshop.png',
@@ -103,12 +107,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Repair Shop.json", function(data) {
+    $.getJSON("geojson/Repair Shop.json", function (data) {
       repair.addData(data);
     });
 
     var clothing = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/clothingstore.png',
@@ -121,12 +125,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Clothing Stores.json", function(data) {
+    $.getJSON("geojson/Clothing Stores.json", function (data) {
       clothing.addData(data);
     });
 
     var cablecar = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/cablecar.png',
@@ -139,12 +143,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Cable Car.json", function(data) {
+    $.getJSON("geojson/Cable Car.json", function (data) {
       cablecar.addData(data);
     });
 
     var carwash = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/carwash.png',
@@ -157,12 +161,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Car Wash.json", function(data) {
+    $.getJSON("geojson/Car Wash.json", function (data) {
       carwash.addData(data);
     });
 
     var tattooparlor = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/tattooparlor.png',
@@ -175,12 +179,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Tattoo Parlor.json", function(data) {
+    $.getJSON("geojson/Tattoo Parlor.json", function (data) {
       tattooparlor.addData(data);
     });
 
     var tennis = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/tennis.png',
@@ -193,12 +197,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Tennis.json", function(data) {
+    $.getJSON("geojson/Tennis.json", function (data) {
       tennis.addData(data);
     });
 
     var fairride = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/fairride.png',
@@ -211,12 +215,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Fair Ride.json", function(data) {
+    $.getJSON("geojson/Fair Ride.json", function (data) {
       fairride.addData(data);
     });
 
     var golf = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/golf.png',
@@ -229,12 +233,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Golf.json", function(data) {
+    $.getJSON("geojson/Golf.json", function (data) {
       golf.addData(data);
     });
 
     var hangerhelipad = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/hangerhelipad.png',
@@ -247,12 +251,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Hanger - Helipad.json", function(data) {
+    $.getJSON("geojson/Hanger - Helipad.json", function (data) {
       hangerhelipad.addData(data);
     });
 
     var safehouse = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/safehouse.png',
@@ -265,12 +269,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Safehouse.json", function(data) {
+    $.getJSON("geojson/Safehouse.json", function (data) {
       safehouse.addData(data);
     });
 
     var triathalon = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/triathalon.png',
@@ -283,12 +287,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Triathalon.json", function(data) {
+    $.getJSON("geojson/Triathalon.json", function (data) {
       triathalon.addData(data);
     });
 
     var movietheater = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/movietheater.png',
@@ -301,12 +305,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Movie Theater.json", function(data) {
+    $.getJSON("geojson/Movie Theater.json", function (data) {
       movietheater.addData(data);
     });
 
     var stripclub = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/stripclub.png',
@@ -319,12 +323,12 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Strip Club.json", function(data) {
+    $.getJSON("geojson/Strip Club.json", function (data) {
       stripclub.addData(data);
     });
 
     var race = L.geoJson(null, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         //Create icon for marker
         var icn = L.icon({
           iconUrl: 'icons/race.png',
@@ -337,35 +341,18 @@
         return marker;
       }
     })
-    $.getJSON("geojson/Race.json", function(data) {
+    $.getJSON("geojson/Race.json", function (data) {
       race.addData(data);
     });
 
     //Create titles for each layer with mini icons to add to the Control
-    var overlay = {
-      "<img src='icons/ammunation.png'align='center'width='30' height='30' /> Ammu-Nation": ammunation,
-      "<img src='icons/ammunationwrange.png'align='center'width='30' height='30'/> Ammu-Nation w/ Gun Range": ammunationwrange,
-      "<img src='icons/barbershop.png'align='center'width='30' height='30'/> Barber Shop": barbershop,
-      "<img src='icons/repairshop.png'align='center'width='30' height='30'/> Repair Shop": repair,
-      "<img src='icons/clothingstore.png'align='center'width='30' height='30'/> Clothing Store": clothing,
-      "<img src='icons/cablecar.png'align='center'width='30' height='30'/> Cable Car": cablecar,
-      "<img src='icons/carwash.png'align='center'width='30' height='30'/> Car Wash": carwash,
-      "<img src='icons/movietheater.png'align='center'width='30' height='30'/> Movie Theater": movietheater,
-      "<img src='icons/tattooparlor.png'align='center'width='30' height='30'/> Tattoo Parlor": tattooparlor,
-      "<img src='icons/tennis.png'align='center'width='30' height='30'/> Tennis": tennis,
-      "<img src='icons/fairride.png'align='center'width='30' height='30'/> Fair Ride": fairride,
-      "<img src='icons/golf.png'align='center'width='30' height='30'/> Golf": golf,
-      "<img src='icons/hangerhelipad.png'align='center'width='30' height='30'/> Hanger/Helipad": hangerhelipad,
-      "<img src='icons/safehouse.png'align='center'width='30' height='30'/> Safehouse": safehouse,
-      "<img src='icons/triathalon.png'align='center'width='30' height='30'/> Triathalon": triathalon,
-      "<img src='icons/stripclub.png'align='center'width='30' height='30'/> Strip Club": stripclub,
-      "<img src='icons/race.png'align='center'width='30' height='30'/> Race": race
-    };
+    var overlay = { };
     //Create titles for each baselayer to add to the Control
     var baseLayers = {
+      "MyLayer": MyLayer,
       "Atlas": atlas,
-      "Road": road,
-      "Satellite": satellite      
+      //"Road": road,
+      //"Satellite": satellite
     }
 
     //Create Control layer and add to map
@@ -382,11 +369,11 @@
         tms: false,
         reusrTiles: true
     }).addTo(map);
-    
+     
     //Add GTAV logo to lower left hand corner
     L.Control.Watermark = L.Control.extend({
       onAdd: function(map) {
-
+     
         var img = L.DomUtil.create('img', 'gtav');
         img.src = 'images/logo.png';
         img.style.width = '200px';
@@ -404,7 +391,7 @@
 
     //When the map's base layer is changed, change the color of the background
     //to match the map
-    map.on('baselayerchange', function(layer) {
+    map.on('baselayerchange', function (layer) {
       if (layer.name == "Road") {
         document.getElementById("map").style.background = "#1862ad";
       }
@@ -415,6 +402,7 @@
         document.getElementById("map").style.background = "#0fa8d2";
       }
     });
+
   </script>
 </body>
 
